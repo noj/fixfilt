@@ -71,6 +71,8 @@ namespace fix
       boost::string_ref value;
     };
 
+    void sort_fields ();
+
     std::vector<Field> fields;
     std::string content;
   };

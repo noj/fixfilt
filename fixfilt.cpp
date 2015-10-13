@@ -17,10 +17,11 @@ int main (int argc, char ** argv)
     bool list = false;
     char output_delimiter = '|';
     bool pretty = false;
+    bool sort = false;
 
     int opt = 0;
 
-    while ((opt = getopt (argc, argv, "d:pv:l")) != -1) {
+    while ((opt = getopt (argc, argv, "d:pv:ls")) != -1) {
       switch (opt) {
         case 'd': delimiter = *optarg; break;
         case 'p':
@@ -29,6 +30,7 @@ int main (int argc, char ** argv)
           break;
         case 'v': version = optarg; break;
         case 'l': list = true; break;
+        case 's': sort = true; break;
         default:
           std::cerr << "usage: " << argv[0]
                     << " [-d delimiter char] [-p] [-v fix version] [-l]\n";
@@ -61,8 +63,14 @@ int main (int argc, char ** argv)
     } else {
       std::string line;
       while (std::getline (std::cin, line)) {
-        fix::Message msg (line, delimiter);
-        std::cout << fix::Expander (msg, output_delimiter, pretty) << std::endl;
+        try {
+          fix::Message msg (line, delimiter);
+          if (sort)
+            msg.sort_fields ();
+          std::cout << fix::Expander (msg, output_delimiter, pretty) << std::endl;
+        } catch (const std::exception & e) {
+          std::cerr << e.what () << std::endl;
+        }
       }
     }
 

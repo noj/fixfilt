@@ -121,6 +121,12 @@ namespace fix
     return boost::none;
   }
 
+  void Message::sort_fields ()
+  {
+    std::sort (fields.begin (), fields.end (),
+               [](const Field & x, const Field & y) { return x.tag < y.tag; });
+  }
+
   std::ostream & operator<<(std::ostream & os, const Message::Field & field)
   {
     return os << field.tag << '|' << field.value;
