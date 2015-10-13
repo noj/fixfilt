@@ -107,8 +107,9 @@ namespace fix
 
   boost::optional<Message::Field> Message::get_field (unsigned tag) const
   {
-    auto it = std::find_if (fields.begin (), fields.end (),
-                            [&](const auto & f) { return f.tag == tag; });
+    auto it =
+      std::find_if (fields.begin (), fields.end (),
+                    [&](const Message::Field & f) { return f.tag == tag; });
     if (it == fields.end ()) return boost::none;
 
     return *it;

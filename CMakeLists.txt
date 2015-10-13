@@ -2,7 +2,7 @@ project(fixfilt)
 cmake_minimum_required(VERSION 2.6)
 enable_testing()
 set (WARNING_FLAGS              "-Wall -Wformat")
-set (CXX_COMMON_FLAGS           "-Woverloaded-virtual -std=c++14 -fno-omit-frame-pointer")
+set (CXX_COMMON_FLAGS           "-Woverloaded-virtual -std=c++11 -fno-omit-frame-pointer")
 set (CMAKE_CXX_FLAGS            "${WARNING_FLAGS} ${CXX_COMMON_FLAGS} -g")
 set (CMAKE_CXX_FLAGS_RELEASE    "${WARNING_FLAGS} ${CXX_COMMON_FLAGS} -O3")
 

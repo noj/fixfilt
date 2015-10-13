@@ -25,5 +25,3 @@ make -j4
 ## Build status
 
 [![Build Status](https://travis-ci.org/noj/fixfilt.svg?branch=master)](https://travis-ci.org/noj/fixfilt)
-
-
