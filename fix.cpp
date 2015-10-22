@@ -168,7 +168,11 @@ namespace fix
           os << field.tag << '(' << def.name << ")=" << field.value;
 
         const auto val_it = def.values.find (std::string (field.value));
-        if (val_it != def.values.end ()) os << ' ' << parenthesize (val_it->second);
+        if (val_it != def.values.end ()) {
+          if (exp.pretty)
+            os << ' ';
+          os << parenthesize (val_it->second);
+        }
       } else {
         if (exp.pretty)
           os << std::setfill (' ') << std::setw (4) << std::right << field.tag
