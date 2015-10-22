@@ -162,13 +162,13 @@ namespace fix
 
         if (exp.pretty)
           os << std::setfill (' ') << std::setw (4) << std::right << field.tag
-             << ' ' << std::setw (15) << std::left << parenthesize (def.name)
-             << std::setw (1) << " = " << std::setw (8) << field.value;
+             << ' ' << std::setw (30) << std::left << parenthesize (def.name)
+             << std::setw (1) << " = " << field.value;
         else
           os << field.tag << '(' << def.name << ")=" << field.value;
 
         const auto val_it = def.values.find (std::string (field.value));
-        if (val_it != def.values.end ()) os << parenthesize (val_it->second);
+        if (val_it != def.values.end ()) os << ' ' << parenthesize (val_it->second);
       } else {
         if (exp.pretty)
           os << std::setfill (' ') << std::setw (4) << std::right << field.tag
