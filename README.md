@@ -5,11 +5,22 @@ little utility can make your life simpler.
 
 ## Features
 
-There are two main features, the first, and main feature is to pretty print
-FIX messages so that a human may read the contents.
+These are the main features:
 
-The second feature simply dumps the tool's knowledge about a specfic protocol
+### Pretty printing
+
+Pretty print FIX messages so that a human may read the contents.
+
+### List FIX version schema
+
+This dumps the tool's knowledge about a specfic protocol
 version. Handy when you want to look something up.
+
+
+### Query field
+
+This searches through the tool's FIX version db for matching field tags /
+names and prints matches.
 
 ## Building
 

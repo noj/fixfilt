@@ -36,7 +36,7 @@ int main (int argc, char ** argv)
         case 'q': query_mode = true; query = optarg; break;
         default:
           std::cerr << "usage: " << argv[0]
-                    << " [-d delimiter char] [-p] [-v fix version] [-l]\n";
+                    << " [-d delimiter char] [-p] [-v fix version] [-l] [-q query]\n";
           exit (EXIT_FAILURE);
           break;
       }
