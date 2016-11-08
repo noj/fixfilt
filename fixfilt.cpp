@@ -18,10 +18,12 @@ int main (int argc, char ** argv)
     char output_delimiter = '|';
     bool pretty = false;
     bool sort = false;
+    bool query_mode = false;
+    std::string query;
 
     int opt = 0;
 
-    while ((opt = getopt (argc, argv, "d:pv:ls")) != -1) {
+    while ((opt = getopt (argc, argv, "d:pv:lsq:")) != -1) {
       switch (opt) {
         case 'd': delimiter = *optarg; break;
         case 'p':
@@ -31,6 +33,7 @@ int main (int argc, char ** argv)
         case 'v': version = optarg; break;
         case 'l': list = true; break;
         case 's': sort = true; break;
+        case 'q': query_mode = true; query = optarg; break;
         default:
           std::cerr << "usage: " << argv[0]
                     << " [-d delimiter char] [-p] [-v fix version] [-l]\n";
@@ -39,9 +42,11 @@ int main (int argc, char ** argv)
       }
     }
 
-    if (list) {
+    if (list || query_mode) {
       const fix::Schema & schema =
         fix::get_schema (boost::string_ref (version));
+
+      std::transform (query.begin (), query.end (), query.begin (), toupper);
 
       std::cout << std::setfill (' ') << std::setw (5) << "Tag"
                 << "  " << std::left << std::setw (30) << "Name" << std::endl;
@@ -51,13 +56,22 @@ int main (int argc, char ** argv)
 
       for (const auto & pair : schema) {
 
+        if (query_mode) {
+          std::string upper_name = pair.second.name;
+          std::transform (upper_name.begin (), upper_name.end (), upper_name.begin (), toupper);
+
+          if (! (std::to_string (pair.first) == query ||
+                 upper_name.find (query) != std::string::npos))
+            continue;
+        }
+
         std::cout << std::setfill (' ') << std::setw (5) << std::right
-                  << pair.first << "  " << std::setw (40) << std::left
-                  << pair.second.name << std::endl;
+          << pair.first << "  " << std::setw (40) << std::left
+          << pair.second.name << std::endl;
 
         for (const auto & value : pair.second.values) {
           std::cout << "       + " << std::setw (4) << value.first << " -> "
-                    << value.second << std::endl;
+            << value.second << std::endl;
         }
       }
     } else {
