@@ -70,7 +70,7 @@ int main (int argc, char ** argv)
           << pair.second.name << std::endl;
 
         for (const auto & value : pair.second.values) {
-          std::cout << "       + " << std::setw (4) << value.first << " -> "
+          std::cout << "       | " << std::setw (4) << value.first << " -> "
             << value.second << std::endl;
         }
       }
