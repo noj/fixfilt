@@ -7,7 +7,9 @@ branches:
     - master
 
 before_script:
-  - make cmake
+  - mkdir build
+  - cd build
+  - cmake ..
 
 script:
   - make
