@@ -1,8 +1,10 @@
 project(fixfilt)
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.12)
 enable_testing()
-set (WARNING_FLAGS           "-Wall -Wformat")
-set (CXX_COMMON_FLAGS        "-Woverloaded-virtual -std=c++17 -fno-omit-frame-pointer")
+set (CMAKE_CXX_STANDARD 17)
+set (CMAKE_CXX_STANDARD_REQUIRED ON)
+set (WARNING_FLAGS           "-Wall -Wformat -pedantic")
+set (CXX_COMMON_FLAGS        "-Woverloaded-virtual -fno-omit-frame-pointer")
 set (CMAKE_CXX_FLAGS         "${WARNING_FLAGS} ${CXX_COMMON_FLAGS} -g")
 set (CMAKE_CXX_FLAGS_RELEASE "${WARNING_FLAGS} ${CXX_COMMON_FLAGS} -O3")
 
