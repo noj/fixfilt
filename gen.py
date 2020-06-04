@@ -39,20 +39,34 @@ class FieldDb(object):
 
 if __name__ == "__main__":
 
-    if len(sys.argv) != 3:
-        print("Need spec xml and output file")
+    if len(sys.argv) != 4:
+        print("Need spec xml, version and output file base")
         sys.exit(1)
 
     fdb = FieldDb (sys.argv [1])
     fdb.build ()
 
-    with open (sys.argv [2], 'w') as f:
+    ver = sys.argv [2]
+
+    output_dir = sys.argv [3]
+    hpp = os.path.join(output_dir, "fix%s.hpp" % ver)
+    cpp = os.path.join(output_dir, "fix%s.cpp" % ver)
+
+    # Write header
+    with open (hpp, 'w') as f:
         f.write ("#pragma once\n")
         f.write ("\n")
         f.write ("#include \"fix.hpp\"\n")
         f.write ("\n")
         f.write ("namespace %s {\n" % (fdb.get_ns()))
-        f.write ("  inline auto load_schema () -> fix::Schema\n")
+        f.write ("  fix::Schema load_schema ();\n")
+        f.write ("}")
+
+    with open (cpp, 'w') as f:
+        f.write ("#include \"fix%s.hpp\"\n" % ver)
+        f.write ("\n")
+        f.write ("namespace %s {\n" % (fdb.get_ns()))
+        f.write ("  fix::Schema load_schema ()\n")
         f.write ("  {\n")
         f.write ("    fix::Schema schema;\n")
         for key, value in fdb.iter ():
@@ -65,4 +79,3 @@ if __name__ == "__main__":
         f.write ("    return schema;\n")
         f.write ("  }\n")
         f.write ("}\n")
-

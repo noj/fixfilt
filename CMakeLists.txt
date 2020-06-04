@@ -1,22 +1,23 @@
 project(fixfilt)
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.0)
 enable_testing()
-set (WARNING_FLAGS              "-Wall -Wformat")
-set (CXX_COMMON_FLAGS           "-Woverloaded-virtual -std=c++11 -fno-omit-frame-pointer")
-set (CMAKE_CXX_FLAGS            "${WARNING_FLAGS} ${CXX_COMMON_FLAGS} -g")
-set (CMAKE_CXX_FLAGS_RELEASE    "${WARNING_FLAGS} ${CXX_COMMON_FLAGS} -O3")
+set (WARNING_FLAGS           "-Wall -Wformat")
+set (CXX_COMMON_FLAGS        "-Woverloaded-virtual -std=c++17 -fno-omit-frame-pointer")
+set (CMAKE_CXX_FLAGS         "${WARNING_FLAGS} ${CXX_COMMON_FLAGS} -g")
+set (CMAKE_CXX_FLAGS_RELEASE "${WARNING_FLAGS} ${CXX_COMMON_FLAGS} -O3")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
-include_directories(ext/boost-1.59)
-include_directories(ext/catch)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/ext)
 
-add_library(fix STATIC fix.cpp fixdb.cpp)
+add_library(fix STATIC 
+  fix.cpp fixdb.cpp gen/fix40.cpp gen/fix41.cpp gen/fix42.cpp gen/fix43.cpp 
+  gen/fix44.cpp gen/fix50.cpp)
 
 add_executable (fixfilt fixfilt.cpp)
 target_link_libraries(fixfilt fix)
 
-add_executable (fix_test fix_test.cpp)
+add_executable (fix_test fix_test.cpp test_main.cpp)
 target_link_libraries(fix_test fix)
 add_test(fix_test fix_test)
 
