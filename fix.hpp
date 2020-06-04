@@ -5,8 +5,8 @@
 #include <map>
 #include <vector>
 #include <iosfwd>
-#include "boost/utility/string_ref.hpp"
-#include "boost/optional.hpp"
+#include <string_view>
+#include <optional>
 
 namespace fix
 {
@@ -20,7 +20,7 @@ namespace fix
     FIX50,
   };
 
-  boost::optional<fix::Ver> parse_ver (boost::string_ref str_ver_);
+  std::optional<fix::Ver> parse_ver (std::string str_ver);
 
   struct FieldDef {
     using ValueMap = std::map<std::string, std::string>;
@@ -44,7 +44,7 @@ namespace fix
   using Schema = std::map<unsigned, FieldDef>;
 
   const Schema & get_schema (Ver ver);
-  const Schema & get_schema (boost::string_ref str_ver);
+  const Schema & get_schema (std::string_view str_ver);
 
   struct Message {
     struct Field;
@@ -54,21 +54,21 @@ namespace fix
 
     void crack (const std::string & msg, char separator = '\001');
 
-    boost::optional<Field> get_field (unsigned tag) const;
+    std::optional<Field> get_field (unsigned tag) const;
 
     //! Tries to extract the FIX version.
-    boost::optional<Ver> get_version () const;
+    std::optional<Ver> get_version () const;
 
     struct Field {
 
       Field ();
-      Field (boost::string_ref tag_, boost::string_ref value_);
-      Field (unsigned tag_, boost::string_ref value_);
+      Field (std::string_view tag_, std::string_view value_);
+      Field (unsigned tag_, std::string_view value_);
 
       bool operator==(const Field & other) const;
 
       unsigned tag;
-      boost::string_ref value;
+      std::string_view value;
     };
 
     void sort_fields ();

@@ -1,10 +1,7 @@
 // vim: ts=2 sw=2
 #include "fix.hpp"
-
-#define CATCH_CONFIG_MAIN
-#include "catch.hpp"
-
-#include "boost/optional/optional_io.hpp"
+#include "catch/catch.hpp"
+#include <sstream>
 
 TEST_CASE ("Basic", "[Fix]")
 {
@@ -30,13 +27,13 @@ TEST_CASE ("Basic", "[Fix]")
 TEST_CASE ("get_field", "[Fix]")
 {
   fix::Message msg ("8=FIX.4.4|35=8|49=ZONK|56=FOO|6=0|11=ABC123", '|');
-  REQUIRE (msg.get_field (4711) == boost::none);
+  REQUIRE (msg.get_field (4711) == std::nullopt);
   REQUIRE (msg.get_field (35)->value == "8");
 }
 
 TEST_CASE ("parse_ver", "[Fix]")
 {
-  REQUIRE (fix::parse_ver ("foo") == boost::none);
+  REQUIRE (fix::parse_ver ("foo") == std::nullopt);
   REQUIRE (*fix::parse_ver ("FIX.4.3") == fix::Ver::FIX43);
 }
 

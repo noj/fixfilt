@@ -44,7 +44,7 @@ int main (int argc, char ** argv)
 
     if (list || query_mode) {
       const fix::Schema & schema =
-        fix::get_schema (boost::string_ref (version));
+        fix::get_schema (std::string_view (version));
 
       std::transform (query.begin (), query.end (), query.begin (), toupper);
 

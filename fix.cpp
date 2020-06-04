@@ -14,9 +14,8 @@ namespace fix
     std::string parenthesize (std::string str) { return '(' + str + ')'; }
   }
 
-  boost::optional<fix::Ver> parse_ver (boost::string_ref str_ver_)
+  std::optional<fix::Ver> parse_ver (std::string str_ver)
   {
-    std::string str_ver = str_ver_.to_string ();
     std::transform (str_ver.begin (), str_ver.end (), str_ver.begin (),
                     ::toupper);
 
@@ -27,18 +26,18 @@ namespace fix
     if (str_ver == "FIX.4.4") return fix::Ver::FIX44;
     if (str_ver == "FIX.5.0") return fix::Ver::FIX50;
 
-    return boost::none;
+    return std::nullopt;
   }
 
   Message::Field::Field () {}
 
-  Message::Field::Field (boost::string_ref tag_, boost::string_ref value_)
+  Message::Field::Field (std::string_view tag_, std::string_view value_)
     : tag (std::stoul (std::string (tag_)))
     , value (value_)
   {
   }
 
-  Message::Field::Field (unsigned tag_, boost::string_ref value_)
+  Message::Field::Field (unsigned tag_, std::string_view value_)
     : tag (tag_)
     , value (value_)
   {
@@ -57,9 +56,9 @@ namespace fix
     crack (content, separator);
   }
 
-  std::vector<boost::string_ref> split (boost::string_ref str, char separator)
+  std::vector<std::string_view> split (std::string_view str, char separator)
   {
-    std::vector<boost::string_ref> res;
+    std::vector<std::string_view> res;
 
     size_t start = 0;
     for (size_t i = 0; i < str.size (); ++i) {
@@ -86,7 +85,7 @@ namespace fix
   {
     content = msg;
 
-    auto str_fields = split (boost::string_ref (content), separator);
+    auto str_fields = split (std::string_view (content), separator);
 
     std::vector<Field> fields_;
     fields_.reserve (str_fields.size ());
@@ -97,7 +96,7 @@ namespace fix
       auto msg = split (str_field, '=');
       if (msg.size () != 2)
         throw std::runtime_error ("Invalid field format: " +
-                                  str_field.to_string ());
+                                  std::string (str_field));
 
       fields_.push_back (Field (msg[0], msg[1]));
     }
@@ -105,20 +104,21 @@ namespace fix
     fields.swap (fields_);
   }
 
-  boost::optional<Message::Field> Message::get_field (unsigned tag) const
+  std::optional<Message::Field> Message::get_field (unsigned tag) const
   {
     auto it =
       std::find_if (fields.begin (), fields.end (),
                     [&](const Message::Field & f) { return f.tag == tag; });
-    if (it == fields.end ()) return boost::none;
+    if (it == fields.end ()) return std::nullopt;
 
     return *it;
   }
 
-  boost::optional<Ver> Message::get_version () const
+  std::optional<Ver> Message::get_version () const
   {
-    if (auto field = get_field (8)) return parse_ver (field->value);
-    return boost::none;
+    if (auto field = get_field (8)) 
+      return parse_ver (std::string (field->value));
+    return std::nullopt;
   }
 
   void Message::sort_fields ()
