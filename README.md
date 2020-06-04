@@ -24,13 +24,14 @@ names and prints matches.
 
 ## Building
 
-CMake is used:
+You can choose to use either [meson](https://mesonbuild.com/) or
+[CMake](https://cmake.org/).
+
+[Ninja](https://ninja-build.org/) is required.
 
 ```sh
-mkdir build
-cd build
-cmake ..
-make -j4
+make meson # or make cmake if you so prefer
+make
 ```
 
 ## Build status
