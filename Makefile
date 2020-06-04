@@ -18,4 +18,4 @@ meson: $(BUILD_DIR)
 	@meson $(BUILD_DIR)
 
 clean:
-	@ninja -C $(BUILD_DIR)
+	@ninja -C $(BUILD_DIR) clean
