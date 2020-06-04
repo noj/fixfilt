@@ -9,12 +9,10 @@ fix_lib = library(
           'gen/fix42.cpp', 'gen/fix43.cpp', 'gen/fix44.cpp', 'gen/fix50.cpp'], 
   include_directories: ext_inc_dir)
 
-test_lib = library('test_lib', ['test_main.cpp'], include_directories: ext_inc_dir)
-
 executable(
   'fixfilt', 'fixfilt.cpp', 
   install : true, link_with : fix_lib, include_directories: ext_inc_dir)
 
 t = executable(
-  'fix_test', 'fix_test.cpp', link_with : [fix_lib, test_lib], include_directories: ext_inc_dir)
+  'fix_test', 'fix_test.cpp', link_with : [fix_lib], include_directories: ext_inc_dir)
 test('basic fix test', t)

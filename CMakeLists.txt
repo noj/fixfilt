@@ -19,7 +19,7 @@ add_library(fix STATIC
 add_executable (fixfilt fixfilt.cpp)
 target_link_libraries(fixfilt fix)
 
-add_executable (fix_test fix_test.cpp test_main.cpp)
+add_executable (fix_test fix_test.cpp)
 target_link_libraries(fix_test fix)
 add_test(fix_test fix_test)
 
