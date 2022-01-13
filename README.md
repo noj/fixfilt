@@ -36,4 +36,4 @@ make
 
 ## Build status
 
-[![Build Status](https://travis-ci.org/noj/fixfilt.svg?branch=master)](https://travis-ci.org/noj/fixfilt)
+[![CMake](https://github.com/noj/fixfilt/actions/workflows/cmake.yml/badge.svg)](https://github.com/noj/fixfilt/actions/workflows/cmake.yml)
