@@ -11,6 +11,7 @@
 #include "gen/fix50.hpp"
 
 #include <map>
+#include <stdexcept>
 
 namespace fix
 {
